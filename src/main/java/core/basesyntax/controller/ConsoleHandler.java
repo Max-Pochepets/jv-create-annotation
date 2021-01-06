@@ -23,6 +23,7 @@ public class ConsoleHandler {
                     command = scanner.nextLine();
                     bet = handleBet(command);
                 } catch (IllegalArgumentException e) {
+                    System.out.println("Enter valid data.");
                     continue;
                 }
                 break;
@@ -35,6 +36,7 @@ public class ConsoleHandler {
                     command = scanner.nextLine();
                     user = handleUser(command);
                 } catch (IllegalArgumentException e) {
+                    System.out.println("Enter valid data.");
                     continue;
                 }
                 break;
@@ -62,7 +64,7 @@ public class ConsoleHandler {
             amount = Integer.parseInt(values[FIRST_SEQUENCE_INDEX]);
             risk = Double.parseDouble(values[SECOND_SEQUENCE_INDEX]);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Enter valid data.");
+            throw new IllegalArgumentException();
         }
         return new Bet(amount, risk);
     }
@@ -70,13 +72,12 @@ public class ConsoleHandler {
     private User handleUser(String command) {
         String firstName;
         String lastName;
-        try {
             String[] values = command.split(" ");
             firstName = values[FIRST_SEQUENCE_INDEX];
             lastName = values[SECOND_SEQUENCE_INDEX];
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Enter valid data.");
-        }
+            if (firstName.contains("^[a-zA-Z]") || lastName.contains("^[a-zA-Z]")) {
+                throw new IllegalArgumentException();
+            }
         return new User(firstName, lastName);
     }
 }
