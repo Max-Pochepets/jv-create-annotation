@@ -1,12 +1,12 @@
 package core.basesyntax.db;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Storage<T> {
-    private List<T> storage = new ArrayList<>();
+public class Storage<K, V> {
+    private Map<K, V> storage = new HashMap<>();
 
-    public List<T> getStorage() {
+    public Map<K, V> getStorage() {
         return storage;
     }
 }

@@ -1,20 +1,20 @@
 package core.basesyntax.dao;
 
 import core.basesyntax.db.Storage;
-import java.util.List;
+import java.util.Map;
 
-public class Dao<T> {
-    private Storage<T> storage;
+public class Dao<K, V> {
+    private Storage<K, V> storage;
 
-    public Dao(Storage<T> storage) {
+    public Dao(Storage<K, V> storage) {
         this.storage = storage;
     }
 
-    public void add(T element) {
-        storage.getStorage().add(element);
+    public void add(K key, V value) {
+        storage.getStorage().put(key, value);
     }
 
-    public List<T> getAll(Storage<T> dataBase) {
+    public Map<K, V> getAll(Storage<K, V> dataBase) {
         return dataBase.getStorage();
     }
 }
