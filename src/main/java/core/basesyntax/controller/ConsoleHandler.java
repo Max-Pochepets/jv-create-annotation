@@ -72,12 +72,13 @@ public class ConsoleHandler {
     private User handleUser(String command) {
         String firstName;
         String lastName;
-            String[] values = command.split(" ");
-            firstName = values[FIRST_SEQUENCE_INDEX];
-            lastName = values[SECOND_SEQUENCE_INDEX];
-            if (firstName.contains("^[a-zA-Z]") || lastName.contains("^[a-zA-Z]")) {
-                throw new IllegalArgumentException();
-            }
+        String[] values = command.split(" ");
+        firstName = values[FIRST_SEQUENCE_INDEX];
+        lastName = values[SECOND_SEQUENCE_INDEX];
+        if (firstName.replaceAll("[^a-zA-Z]", "").length() != firstName.length()
+                || lastName.replaceAll("[^a-zA-Z]", "").length() != lastName.length()) {
+            throw new IllegalArgumentException();
+        }
         return new User(firstName, lastName);
     }
 }
