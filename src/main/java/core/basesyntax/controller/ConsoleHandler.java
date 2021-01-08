@@ -1,7 +1,8 @@
 package core.basesyntax.controller;
 
 import core.basesyntax.dao.Dao;
-import core.basesyntax.db.Storage;
+import core.basesyntax.dao.impl.BetDao;
+import core.basesyntax.dao.impl.UserDao;
 import core.basesyntax.model.Bet;
 import core.basesyntax.model.User;
 import java.util.Scanner;
@@ -10,9 +11,10 @@ public class ConsoleHandler {
     public static final int FIRST_SEQUENCE_INDEX = 0;
     public static final int SECOND_SEQUENCE_INDEX = 1;
 
-    public void handle(Storage<User, Bet> storage) {
-        Dao<User, Bet> dao = new Dao<>(storage);
+    public void handle() {
         Scanner scanner = new Scanner(System.in);
+        Dao<Bet> betDao = new BetDao();
+        Dao<User> userDao = new UserDao();
         String command;
 
         while (true) {
@@ -28,6 +30,7 @@ public class ConsoleHandler {
                 }
                 break;
             }
+            betDao.add(bet);
 
             System.out.println("Please, enter your first and last name to verify the bet");
             User user;
@@ -41,13 +44,12 @@ public class ConsoleHandler {
                 }
                 break;
             }
-
-            dao.add(user, bet);
+            userDao.add(user);
 
             System.out.println("Next? Y/N");
             command = scanner.nextLine();
             while (!command.equalsIgnoreCase("y") && !command.equalsIgnoreCase("n")) {
-                System.out.println("It's Y or N, you silly ^^");
+                System.out.println("Enter Y or N, please");
                 command = scanner.nextLine();
             }
             if (command.equalsIgnoreCase("n")) {
@@ -63,7 +65,7 @@ public class ConsoleHandler {
             String[] values = command.split(" ");
             amount = Integer.parseInt(values[FIRST_SEQUENCE_INDEX]);
             risk = Double.parseDouble(values[SECOND_SEQUENCE_INDEX]);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
             throw new IllegalArgumentException();
         }
         return new Bet(amount, risk);
@@ -72,11 +74,20 @@ public class ConsoleHandler {
     private User handleUser(String command) {
         String firstName;
         String lastName;
-        String[] values = command.split(" ");
-        firstName = values[FIRST_SEQUENCE_INDEX];
-        lastName = values[SECOND_SEQUENCE_INDEX];
+        if (command == null) {
+            throw new IllegalArgumentException();
+        }
+        try {
+            String[] values = command.split(" ");
+            firstName = values[FIRST_SEQUENCE_INDEX];
+            lastName = values[SECOND_SEQUENCE_INDEX];
+        } catch (IndexOutOfBoundsException e) {
+            throw new IllegalArgumentException();
+        }
         if (firstName.replaceAll("[^a-zA-Z]", "").length() != firstName.length()
-                || lastName.replaceAll("[^a-zA-Z]", "").length() != lastName.length()) {
+                || lastName.replaceAll("[^a-zA-Z]", "").length() != lastName.length()
+                || firstName.replaceAll(" ", "").length() == 0
+                || lastName.replaceAll(" ", "").length() == 0) {
             throw new IllegalArgumentException();
         }
         return new User(firstName, lastName);

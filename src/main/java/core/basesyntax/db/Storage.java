@@ -1,12 +1,11 @@
 package core.basesyntax.db;
 
-import java.util.HashMap;
-import java.util.Map;
+import core.basesyntax.model.Bet;
+import core.basesyntax.model.User;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Storage<K, V> {
-    private Map<K, V> storage = new HashMap<>();
-
-    public Map<K, V> getStorage() {
-        return storage;
-    }
+public class Storage {
+    public static List<Bet> betsStorage = new ArrayList<>();
+    public static List<User> usersStorage = new ArrayList<>();
 }
