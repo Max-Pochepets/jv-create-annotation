@@ -1,10 +1,8 @@
-package core.basesyntax.dao.impl;
+package core.basesyntax.dao;
 
-import core.basesyntax.dao.Dao;
 import core.basesyntax.db.Storage;
 import core.basesyntax.lib.Dao;
 import core.basesyntax.model.Bet;
-
 import java.util.List;
 
 @Dao
