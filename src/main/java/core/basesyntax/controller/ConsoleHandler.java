@@ -86,8 +86,7 @@ public class ConsoleHandler {
         }
         if (firstName.replaceAll("[^a-zA-Z]", "").length() != firstName.length()
                 || lastName.replaceAll("[^a-zA-Z]", "").length() != lastName.length()
-                || firstName.replaceAll(" ", "").length() == 0
-                || lastName.replaceAll(" ", "").length() == 0) {
+                || command.isEmpty()) {
             throw new IllegalArgumentException();
         }
         return new User(firstName, lastName);
