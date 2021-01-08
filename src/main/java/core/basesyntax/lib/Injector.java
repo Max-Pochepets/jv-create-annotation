@@ -2,6 +2,7 @@ package core.basesyntax.lib;
 
 import core.basesyntax.dao.BetDao;
 import core.basesyntax.dao.UserDao;
+import core.basesyntax.exception.IllegalAnnotationException;
 import core.basesyntax.factory.BetDaoSingleFactory;
 import core.basesyntax.factory.UserDaoSingleFactory;
 import java.lang.reflect.Constructor;
@@ -10,7 +11,8 @@ import java.lang.reflect.InvocationTargetException;
 
 public class Injector {
     public static Object getInstance(Class clazz) throws NoSuchMethodException,
-            IllegalAccessException, InvocationTargetException, InstantiationException {
+            IllegalAccessException, InvocationTargetException,
+            InstantiationException, IllegalAnnotationException {
         Constructor constructor = clazz.getDeclaredConstructor();
         Object instance = constructor.newInstance();
 
@@ -25,6 +27,8 @@ public class Injector {
                     if (field.getType() == UserDao.class) {
                         field.set(instance, UserDaoSingleFactory.get());
                     }
+                } else {
+                    throw new IllegalAnnotationException("This isn't the value we should inject.");
                 }
             }
         }
