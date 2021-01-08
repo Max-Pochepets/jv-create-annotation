@@ -6,13 +6,11 @@ import core.basesyntax.model.User;
 
 import java.util.List;
 
-public class UserDao implements Dao<User> {
-    @Override
+public class UserDao {
     public void add(User value) {
         Storage.usersStorage.add(value);
     }
 
-    @Override
     public List<User> getAll() {
         return Storage.usersStorage;
     }
