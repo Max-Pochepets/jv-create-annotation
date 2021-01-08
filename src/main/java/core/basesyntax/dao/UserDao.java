@@ -1,12 +1,16 @@
-package core.basesyntax.dao.impl;
+package core.basesyntax.dao;
 
-import core.basesyntax.dao.Dao;
 import core.basesyntax.db.Storage;
 import core.basesyntax.model.User;
 
-public class UserDao implements Dao<User> {
-    @Override
+import java.util.List;
+
+public class UserDao {
     public void add(User value) {
         Storage.usersStorage.add(value);
+    }
+
+    public List<User> getAll() {
+        return Storage.usersStorage;
     }
 }
