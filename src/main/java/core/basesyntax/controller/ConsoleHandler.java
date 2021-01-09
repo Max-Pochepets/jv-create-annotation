@@ -1,7 +1,6 @@
 package core.basesyntax.controller;
 
-import core.basesyntax.dao.BetDao;
-import core.basesyntax.dao.UserDao;
+import core.basesyntax.dao.Dao;
 import core.basesyntax.lib.Inject;
 import core.basesyntax.model.Bet;
 import core.basesyntax.model.User;
@@ -11,9 +10,9 @@ public class ConsoleHandler {
     public static final int FIRST_SEQUENCE_INDEX = 0;
     public static final int SECOND_SEQUENCE_INDEX = 1;
     @Inject
-    BetDao betDao;
+    Dao<Bet> betDao;
     @Inject
-    UserDao userDao;
+    Dao<User> userDao;
 
     public void handle() {
         Scanner scanner = new Scanner(System.in);

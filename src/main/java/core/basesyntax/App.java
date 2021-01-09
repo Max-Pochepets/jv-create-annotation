@@ -2,8 +2,7 @@ package core.basesyntax;
 
 import core.basesyntax.controller.ConsoleHandler;
 import core.basesyntax.exception.IllegalAnnotationException;
-import core.basesyntax.factory.BetDaoSingleFactory;
-import core.basesyntax.factory.UserDaoSingleFactory;
+import core.basesyntax.factory.Factory;
 import core.basesyntax.lib.Injector;
 import java.lang.reflect.InvocationTargetException;
 
@@ -14,7 +13,7 @@ public class App {
 
         handler.handle();
 
-        System.out.println("Bets:\n" + BetDaoSingleFactory.get().getAll());
-        System.out.println("Users:\n" + UserDaoSingleFactory.get().getAll());
+        System.out.println("Bets:\n" + Factory.getBetDao().getAll());
+        System.out.println("Users:\n" + Factory.getUserDao().getAll());
     }
 }
