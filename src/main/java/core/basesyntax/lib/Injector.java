@@ -1,6 +1,6 @@
 package core.basesyntax.lib;
 
-import core.basesyntax.dao.Dao;
+import core.basesyntax.dao.DaoInterface;
 import core.basesyntax.exception.IllegalAnnotationException;
 import core.basesyntax.factory.Factory;
 import core.basesyntax.model.Bet;
@@ -27,17 +27,16 @@ public class Injector {
         return instance;
     }
 
-    private static Dao<?> getDao(Type type) throws IllegalAnnotationException {
-        Dao<?> dao = null;
+    private static DaoInterface<?> getDao(Type type) throws IllegalAnnotationException {
+        DaoInterface<?> daoInterface = null;
         if (type.getTypeName().contains(Bet.class.getTypeName())) {
-            dao = Factory.getBetDao();
+            daoInterface = Factory.getBetDao();
         } else if (type.getTypeName().contains(User.class.getTypeName())) {
-            dao = Factory.getUserDao();
+            daoInterface = Factory.getUserDao();
         }
-        if (dao != null && dao.getClass().getAnnotation(DaoAnnotation.class) != null) {
-            return dao;
-        } else {
-            throw new IllegalAnnotationException("DaoAnnotation missing.");
+        if (daoInterface != null && daoInterface.getClass().getAnnotation(Dao.class) != null) {
+            return daoInterface;
         }
+        throw new IllegalAnnotationException("DaoAnnotation missing.");
     }
 }
